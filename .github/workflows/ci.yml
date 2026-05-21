@@ -38,3 +38,7 @@ jobs:
 
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/dns-api-devops:latest
+
+      - name: Deploy to Render
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
