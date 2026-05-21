@@ -50,7 +50,7 @@ jobs:
         with:
           environment: production
           version: ${{ github.sha }}
-
+          set_commits: skip
 
       - name: Deploy to Render
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
