@@ -1,6 +1,19 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import Literal
+import os
+import sentry_sdk
+from sentry_sdk.integrations.fastapi import FastApiIntegration
+
+sentry_sdk.init(
+    dsn=os.getenv("SENTRY_DSN"),
+    environment=os.getenv("SENTRY_ENVIRONMENT", "development"),
+    release=os.getenv("SENTRY_RELEASE"),
+    integrations=[
+        FastApiIntegration(),
+    ],
+    traces_sample_rate=1.0,
+)
 
 app = FastAPI(title="DNS Management API")
 
