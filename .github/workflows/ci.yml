@@ -39,6 +39,19 @@ jobs:
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/dns-api-devops:latest
 
+
+     - name: Create Sentry release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: getsentry/action-release@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+        with:
+          environment: production
+          version: ${{ github.sha }}
+
+
       - name: Deploy to Render
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
