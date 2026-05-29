@@ -45,7 +45,7 @@ record_id_counter = 1
 
 @app.get("/")
 def read_root():
-    return {"message": "DNS Management API is running from GitHub Actions & Sentry Monitoring tool v2"}
+    return {"message": "DNS Management API is running from GitHub Actions & Sentry Monitoring tool v3"}
 
 
 @app.post("/zones", status_code=201)
