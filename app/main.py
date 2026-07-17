@@ -47,6 +47,9 @@ record_id_counter = 1
 def read_root():
     return {"message": "DNS Management API is running from GitHub Actions & Sentry Monitoring tool v3"}
 
+@app.get("/debug-sentry", include_in_schema=False)
+def debug_sentry():
+    raise RuntimeError("Prueba de integración de FastAPI con Sentry")
 
 @app.post("/zones", status_code=201)
 def create_zone(zone: ZoneCreate):
